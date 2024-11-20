@@ -1,16 +1,82 @@
+"use client";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { NextRequest } from "next/server";
+import FlashBanner from "@/app/components/common/FlashBanner";
+import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 
 export default function Otp() {
+  const [otp, setOtp] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const router = useRouter();
+  const searchParams = new URLSearchParams(window.location.search);
+  const adminId = searchParams.get('adminId'); 
+  const [error, setError] = useState(null);
+  const [success, setSuccess] = useState(null);
+
+  const submit = async (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const apiUrl =
+      "https://school-project-backend-p17b.onrender.com/api/v1/commerce/admin/auth/verify-email-token";
+    const data = { token: otp, userId: adminId};
+    try {
+      const response = await axios.post(apiUrl, data);
+      const token = response.data.data.token;
+      if (token) {
+        setSuccess("OTP Verified")
+        localStorage.setItem("jwt", token);
+        setIsLoading(false);
+        setTimeout(() => {
+          localStorage.removeItem('jwt');
+          router.push('/admin/login');
+        }, 3600000); // 1 hour
+        router.push("/dashboard");
+      } else {
+        setIsLoading(false);
+        console.error("OTP not found in the response");
+        setError("Network Error");
+        router.push("/admin/login");
+      }
+    } catch (error) {
+      console.error("Error during verification:", error.response?.data.message);
+      setError(error.response?.data.message);
+      setIsLoading(false);
+      setTimeout(() => {
+          router.push('/admin/login');
+        }, 3600);
+    }
+  };
+
+  const handleOtpChange = (e) => {
+    setOtp(e.target.value);
+  };
+
     return (
       <>
-        {/*
-          This example requires updating your template:
-  
-          ```
-          <html class="h-full bg-white">
-          <body class="h-full">
-          ```
-        */}
+       {error && (
+        <FlashBanner
+          message={error}
+          type="error"
+          onClose={() => setError(null)}
+        />
+      )}
+      {
+        success && (
+          <FlashBanner
+            message={success}
+            type="success"
+            onClose={() => setSuccess(null)}
+          />
+        )
+      }
         <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
           <div className="sm:mx-auto sm:w-full sm:max-w-sm">
             <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
               Enter the OTP that was sent to your email
@@ -18,7 +84,7 @@ export default function Otp() {
           </div>
   
           <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-            <form action="#" method="POST" className="space-y-6">
+            <form onSubmit={submit} method="POST" className="space-y-6">
               <div>
                 <label htmlFor="otp" className="block text-sm/6 font-medium text-gray-900">
                   OTP
@@ -29,12 +95,12 @@ export default function Otp() {
                     name="otp"
                     type="text"
                     required
-                    autoComplete="text"
                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
+                    onChange={handleOtpChange}
                   />
                 </div>
               </div>
-  
+              {isLoading && <LoadingSpinner />}
               <div>
                 <button
                   type="submit"
@@ -44,13 +110,6 @@ export default function Otp() {
                 </button>
               </div>
             </form>
-  
-            {/* <p className="mt-10 text-center text-sm/6 text-gray-500">
-              Not a member?{' '}
-              <a href="#" className="font-semibold text-indigo-600 hover:text-indigo-500">
-                Start a 14 day free trial
-              </a>
-            </p> */}
           </div>
         </div>
       </>

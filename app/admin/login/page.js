@@ -24,14 +24,13 @@ export default function Login() {
 
       const token = response.data.data.jwt;
       if (token) {
-        setSuccess("Login Successful")
-        localStorage.setItem("jwt", token);
+        setSuccess("Login Successful");
         setIsLoading(false);
-        setTimeout(() => {
-          localStorage.removeItem('jwt');
-          router.push('admin/login');
-        }, 3600000); // 1 hour
-        router.push("/dashboard");
+        await axios.post(
+          "https://school-project-backend-p17b.onrender.com/api/v1/commerce/admin/auth/send-email-token",
+          {email: response.data.data.email}
+        );
+        router.push(`/admin/otp?adminId=${response.data.data.adminId}`);
       } else {
         setIsLoading(false);
         console.error("Token not found in the response");
@@ -60,15 +59,13 @@ export default function Login() {
           onClose={() => setError(null)}
         />
       )}
-      {
-        success && (
-          <FlashBanner
-            message={success}
-            type="success"
-            onClose={() => setSuccess(null)}
-          />
-        )
-      }
+      {success && (
+        <FlashBanner
+          message={success}
+          type="success"
+          onClose={() => setSuccess(null)}
+        />
+      )}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <br />
         <br />
@@ -76,9 +73,12 @@ export default function Login() {
         <br />
         <br />
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl/9 font-bold tracking-tight text-gray-900">
-            Sign in to your account
+          <h2 className="mt-10 text-center text-3xl/9 font-bold tracking-tight text-gray-900">
+            Welcome back Cyber Admin
           </h2>
+          <p className="mt-5 text-center tracking-tight text-gray-700">
+            Enter your username and secret pass
+          </p>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
