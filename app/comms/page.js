@@ -6,7 +6,7 @@ export default function Page() {
     <>
     <Navbar />
     <Layout title="Comms">
-      Comms
+      Email Broadcast
     </Layout>
     </>
   );
