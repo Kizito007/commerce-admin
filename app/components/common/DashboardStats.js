@@ -18,7 +18,7 @@ export default function DashboardStats({ stats, isLoading }) {
 
     <div className="bg-gray-100 text-gray-900 min-h-screen p-8 space-y-12">
       {/* Header */}
-      <h1 className="text-4xl font-bold tracking-tight">Dashboard Overview</h1>
+      <h1 className="text-2xl font-bold tracking-tight">Dashboard Overview</h1>
       {
         isLoading ?
           <LoadingSpinner /> :
