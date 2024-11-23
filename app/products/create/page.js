@@ -6,6 +6,7 @@ import FlashBanner from "@/app/components/common/FlashBanner";
 import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 import { PhotoIcon } from '@heroicons/react/24/solid'
 import { useAuth } from "@/app/components/hooks/useAuth";
+import Navbar from "@/app/components/layout/Navbar";
 
 export default function CreateProduct() {
   useAuth();
@@ -65,6 +66,7 @@ export default function CreateProduct() {
 
   return (
     <>
+    <Navbar />
       {error && (
         <FlashBanner
           message={error}
@@ -105,7 +107,7 @@ export default function CreateProduct() {
                   type="text"
                   required
                   value={formData.name}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
+                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
                   onChange={handleChange}
                 />
               </div>
@@ -124,7 +126,7 @@ export default function CreateProduct() {
                   type="number"
                   required
                   value={formData.amount}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
+                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
                   onChange={handleChange}
                 />
               </div>
@@ -142,7 +144,7 @@ export default function CreateProduct() {
                         id="description"
                         name="description"
                         rows={3}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
+                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
                         value={formData.description}
                         onChange={handleChange}
                       />
@@ -168,7 +170,7 @@ export default function CreateProduct() {
                     type="number"
                     required
                     value={formData.availableStock}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
+                    className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
                     onChange={handleChange}
                   />
                 </div>
@@ -186,7 +188,7 @@ export default function CreateProduct() {
                     name="percentageDiscount"
                     type="number"
                     value={formData.percentageDiscount}
-                    className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
+                    className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
                     onChange={handleChange}
                   />
                 </div>
@@ -205,7 +207,7 @@ export default function CreateProduct() {
                         autoComplete="status"
                         value={formData.status}
                         onChange={handleChange}
-                        className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:max-w-xs sm:text-sm/6"
+                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:max-w-xs sm:text-sm/6"
                       >
                         <option>NEW</option>
                         <option>USED</option>
@@ -233,6 +235,18 @@ export default function CreateProduct() {
                       <p className="pl-1">or drag and drop</p>
                     </div>
                     <p className="text-xs/5 text-gray-600">PNG, JPG up to 10MB</p>
+                    {formData.file && (
+                    <div className="mt-4 text-center">
+                      <p className="text-sm text-gray-700">Selected file: {formData.file.name}</p>
+                      {formData.file.type.startsWith("image/") && (
+                        <img
+                          src={URL.createObjectURL(formData.file)}
+                          alt="Preview"
+                          className="mt-4 mx-auto max-h-40"
+                        />
+                      )}
+                    </div>
+                  )}
                   </div>
                 </div>
               </div>
@@ -242,7 +256,7 @@ export default function CreateProduct() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-gray-950 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                className="flex w-full justify-center rounded-md bg-gray-950 px-3 p-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
               >
                 Create Product
               </button>

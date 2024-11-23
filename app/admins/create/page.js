@@ -6,16 +6,16 @@ import FlashBanner from "@/app/components/common/FlashBanner";
 import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 import { PhotoIcon } from '@heroicons/react/24/solid'
 import { useAuth } from "@/app/components/hooks/useAuth";
+import Navbar from "@/app/components/layout/Navbar";
 
 export default function CreateAdmin() {
   useAuth();
   const [formData, setFormData] = useState({
-    name: "",
-    amount: "",
-    description: "",
-    availableStock: "",
-    percentageDiscount: "",
-    status: "NEW", // Default value
+    username: "",
+    email: "",
+    password: "",
+    securityAnswer: "",
+    role: "EDITOR", // Default value
     file: null,
   });
   const [isLoading, setIsLoading] = useState(false);
@@ -44,18 +44,18 @@ export default function CreateAdmin() {
       const jwt = localStorage.getItem('jwt')
 
       const apiUrl =
-        "https://school-project-backend-p17b.onrender.com/api/v1/commerce/admin/product-mgmt/products";
+        "https://school-project-backend-p17b.onrender.com/api/v1/commerce/admin/admin-mgmt/admins";
       await axios.post(apiUrl, formDataToSubmit, {
         headers: { 'Content-Type': 'multipart/form-data', 'Authorization': `Bearer ${jwt}` },
       });
 
-      setSuccess("Product created successfully!");
+      setSuccess("Admin created successfully!");
       setTimeout(() => {
-        router.push("/products");
+        router.push("/admins");
       }, 2000);
     } catch (error) {
       setError(
-        error.response?.data.message || "An error occurred while creating the product."
+        error.response?.data.message || "An error occurred while creating the administrator."
       );
     } finally {
       setIsLoading(false);
@@ -65,6 +65,7 @@ export default function CreateAdmin() {
 
   return (
     <>
+      <Navbar/>
       {error && (
         <FlashBanner
           message={error}
@@ -91,7 +92,7 @@ export default function CreateAdmin() {
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
           <form onSubmit={handleSubmit} method="POST" className="space-y-6">
-          <div>
+            <div>
               <label htmlFor="email" className="block text-sm/6 font-medium text-gray-900">
                 Email address
               </label>
@@ -101,8 +102,10 @@ export default function CreateAdmin() {
                   name="email"
                   type="email"
                   required
+                  value={formData.email}
+                  onChange={handleChange}
                   autoComplete="email"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
                 />
               </div>
             </div>
@@ -120,8 +123,10 @@ export default function CreateAdmin() {
                   name="password"
                   type="password"
                   required
+                  value={formData.password}
+                  onChange={handleChange}
                   autoComplete="current-password"
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm/6"
+                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
                 />
               </div>
             </div>
@@ -139,8 +144,28 @@ export default function CreateAdmin() {
                   name="username"
                   type="text"
                   required
-                  value={formData.name}
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
+                  value={formData.username}
+                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+
+            <div>
+              <label
+                htmlFor="securityAnswer"
+                className="block text-sm/6 font-medium text-gray-900"
+              >
+                Security Question Answer
+              </label>
+              <div className="mt-2">
+                <input
+                  id="securityAnswer"
+                  name="securityAnswer"
+                  type="text"
+                  required
+                  value={formData.securityAnswer}
+                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
                   onChange={handleChange}
                 />
               </div>
@@ -149,29 +174,28 @@ export default function CreateAdmin() {
             <div className="border-b border-gray-900/10 pb-12">
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="sm:col-span-3">
-                  <label htmlFor="status" className="block text-sm/6 font-medium text-gray-900">
-                    Status
+                  <label htmlFor="role" className="block text-sm/6 font-medium text-gray-900">
+                    Role
                   </label>
                   <div className="mt-2">
                     <select
-                      id="status"
-                      name="status"
-                      autoComplete="status"
-                      value={formData.status}
+                      id="role"
+                      name="role"
+                      value={formData.role}
                       onChange={handleChange}
-                      className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:max-w-xs sm:text-sm/6"
+                      className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:max-w-xs sm:text-sm/6"
                     >
-                      <option>NEW</option>
-                      <option>USED</option>
-                      <option>LIMITED</option>
+                      <option>EDITOR</option>
+                      <option>ARBITRATOR</option>
+                      <option>SUPER_ADMIN</option>
                     </select>
                   </div>
                 </div>
               </div>
             </div>
             <div className="col-span-full">
-              <label htmlFor="cover-photo" className="block text-sm/6 font-medium text-gray-900">
-                Product Image
+              <label htmlFor="photo" className="block text-sm/6 font-medium text-gray-900">
+                Admin Photo For Face Verification
               </label>
               <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                 <div className="text-center">
@@ -187,6 +211,18 @@ export default function CreateAdmin() {
                     <p className="pl-1">or drag and drop</p>
                   </div>
                   <p className="text-xs/5 text-gray-600">PNG, JPG up to 10MB</p>
+                  {formData.file && (
+                    <div className="mt-4 text-center">
+                      <p className="text-sm text-gray-700">Selected file: {formData.file.name}</p>
+                      {formData.file.type.startsWith("image/") && (
+                        <img
+                          src={URL.createObjectURL(formData.file)}
+                          alt="Preview"
+                          className="mt-4 mx-auto max-h-40"
+                        />
+                      )}
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -195,7 +231,7 @@ export default function CreateAdmin() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-gray-950 px-3 py-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
+                className="flex w-full justify-center rounded-md bg-gray-950 px-3 p-1.5 text-sm/6 font-semibold text-white shadow-sm hover:bg-gray-800 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-gray-600"
               >
                 Create Admin
               </button>
