@@ -28,7 +28,7 @@ export default function Page() {
         setAdmins(response.data.data);
         setIsLoading(false);
       } catch (err) {
-        setError("Failed to fetch stats. Please try again later.");
+        setError("Failed to fetch admins. Please try again later.");
         setIsLoading(false);
       }
     };
