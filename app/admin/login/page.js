@@ -30,6 +30,7 @@ export default function Login() {
           "https://school-project-backend-p17b.onrender.com/api/v1/commerce/admin/auth/send-email-token",
           {email: response.data.data.email}
         );
+        localStorage.setItem("adminId", response.data.data.adminId)
         router.push(`/admin/otp?adminId=${response.data.data.adminId}`);
       } else {
         setIsLoading(false);

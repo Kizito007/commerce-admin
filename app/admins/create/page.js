@@ -5,11 +5,12 @@ import { useState } from "react";
 import FlashBanner from "@/app/components/common/FlashBanner";
 import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 import { PhotoIcon } from '@heroicons/react/24/solid'
-import { useAuth } from "@/app/components/hooks/useAuth";
+import { useAuth, useFaceAuth } from "@/app/components/hooks/useAuth";
 import Navbar from "@/app/components/layout/Navbar";
 
 export default function CreateAdmin() {
   useAuth();
+  useFaceAuth('admins/create');
   const [formData, setFormData] = useState({
     username: "",
     email: "",

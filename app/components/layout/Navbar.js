@@ -37,7 +37,9 @@ export default function Navbar() {
 
   const signOut = () => {
     localStorage.removeItem('jwt');
-    router.push('admin/login');
+    localStorage.removeItem('adminId');
+    localStorage.removeItem('faceMatch');
+    router.push('/admin/login');
   };
   
   return (

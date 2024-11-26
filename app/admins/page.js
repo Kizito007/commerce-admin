@@ -17,6 +17,7 @@ export default function Page() {
     const fetcAdmins = async () => {
       try {
         const jwt = localStorage.getItem('jwt')
+        localStorage.removeItem('faceMatch');
         const response = await axios.get(
           'https://school-project-backend-p17b.onrender.com/api/v1/commerce/admin/admin-mgmt/admins',
           {

@@ -8,7 +8,18 @@ export function useAuth() {
   useEffect(() => {
     const token = localStorage.getItem('jwt');
     if (!token) {
-      router.push('admin/login');
+      router.push('/admin/login');
+    }
+  }, [router]);
+}
+
+export function useFaceAuth(history) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const faceMatch = localStorage.getItem('faceMatch');
+    if (!faceMatch) {
+      router.push(`/admin/compare-face?history=${history}`);
     }
   }, [router]);
 }

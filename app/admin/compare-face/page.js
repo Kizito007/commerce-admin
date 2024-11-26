@@ -6,20 +6,18 @@ import FlashBanner from "@/app/components/common/FlashBanner";
 import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 import { convertBase64ImageToJpg } from "./convertBase64ToJpg";
 import { useRouter } from "next/navigation";
-import { useAuth } from "@/app/components/hooks/useAuth";
 
 export default function CameraCaptureUpload() {
-    useAuth();
     const [capturedImage, setCapturedImage] = useState(null);
-    const [uploadedImage, setUploadedImage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
     const [admin, setAdmin] = useState({});
     const webcamRef = useRef(null);
-    const searchParams = new URLSearchParams(window.location.search);
-    const adminId = searchParams.get('adminId');
+    const adminId = localStorage.getItem('adminId');
     const router = useRouter();
+    const searchParams = new URLSearchParams(window.location.search);
+    const history = searchParams.get('history');
 
     useEffect(() => {
         const fetchAdmin = async () => {
@@ -79,11 +77,11 @@ export default function CameraCaptureUpload() {
             );
             const confidence = response.data.data.confidence
             if (confidence && confidence >= 75 ) {
-                setSuccess(`Images matches with confidence ${confidence}`)
+                setSuccess(`Images match with confidence level of ${confidence}`)
                 localStorage.setItem("faceMatch", true);
                 setIsLoading(false)
                 setTimeout(() => {
-                router.push('/dashboard');
+                router.push(`/${history}`);
                 }, 3600);
                 setTimeout(() => {
                     localStorage.removeItem('faceMatch');
@@ -143,7 +141,7 @@ export default function CameraCaptureUpload() {
                             className="mt-2 mx-2 w-48 h-48 rounded-lg shadow-lg"
                         />
                         <img
-                            src={admin.photo?.url}
+                            src={admin?.photo?.url}
                             alt="Captured"
                             className="mt-2 w-48 h-48 rounded-lg shadow-lg"
                         />
@@ -154,17 +152,6 @@ export default function CameraCaptureUpload() {
                         >
                             Retake
                         </button>
-                    </div>
-                )}
-
-                {uploadedImage && (
-                    <div className="mb-6">
-                        <h2 className="text-lg font-semibold">Uploaded Image:</h2>
-                        <img
-                            src={uploadedImage}
-                            alt="Uploaded"
-                            className="mt-2 w-48 h-48 rounded-lg shadow-lg"
-                        />
                     </div>
                 )}
 
