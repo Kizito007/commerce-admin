@@ -14,12 +14,12 @@ export default function CameraCaptureUpload() {
     const [success, setSuccess] = useState(null);
     const [admin, setAdmin] = useState({});
     const webcamRef = useRef(null);
-    const adminId = localStorage.getItem('adminId');
     const router = useRouter();
     const searchParams = new URLSearchParams(window.location.search);
     const history = searchParams.get('history');
-
+    
     useEffect(() => {
+        const adminId = localStorage.getItem('adminId');
         const fetchAdmin = async () => {
           try {
             const jwt = localStorage.getItem('jwt')

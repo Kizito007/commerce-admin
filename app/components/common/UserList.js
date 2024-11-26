@@ -9,7 +9,7 @@ export default function UserList({ users, isLoading }) {
                     <h2 className="text-2xl font-bold tracking-tight text-gray-900">Total Users: {users.length} </h2>
                     <div className="flex justify-end items-center mb-4">
                         <a
-                            href="/users/broadcast"
+                            href="/comms/broadcast"
                             className="bg-gray-950 text-white px-4 py-2 rounded-md shadow hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-gray-700"
                         >
                             Broadcast Email
