@@ -5,7 +5,7 @@ import Webcam from "react-webcam";
 import FlashBanner from "@/app/components/common/FlashBanner";
 import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 import { convertBase64ImageToJpg } from "./convertBase64ToJpg";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function CameraCaptureUpload() {
     const [capturedImage, setCapturedImage] = useState(null);
@@ -15,7 +15,7 @@ export default function CameraCaptureUpload() {
     const [admin, setAdmin] = useState({});
     const webcamRef = useRef(null);
     const router = useRouter();
-    const searchParams = new URLSearchParams(window.location.search);
+    const searchParams = useSearchParams();
     const history = searchParams.get('history');
     
     useEffect(() => {

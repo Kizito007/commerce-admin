@@ -1,8 +1,7 @@
 "use client";
 import axios from "axios";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { NextRequest } from "next/server";
 import FlashBanner from "@/app/components/common/FlashBanner";
 import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 
@@ -10,7 +9,7 @@ export default function Otp() {
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const searchParams = new URLSearchParams(window.location.search);
+  const searchParams = useSearchParams();
   const adminId = searchParams.get('adminId'); 
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
