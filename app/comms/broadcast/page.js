@@ -32,7 +32,7 @@ export default function CreateBroadcast() {
       const jwt = localStorage.getItem('jwt')
       const apiUrl =
         "https://school-project-backend-p17b.onrender.com/api/v1/commerce/admin/admin-mgmt/send-bulk-email";
-      await axios.post(apiUrl, {subject, text}, {
+      await axios.post(apiUrl, { subject, text }, {
         headers: { 'Authorization': `Bearer ${jwt}` },
       });
 
@@ -52,7 +52,7 @@ export default function CreateBroadcast() {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       {error && (
         <FlashBanner
           message={error}
@@ -101,21 +101,21 @@ export default function CreateBroadcast() {
             </div>
 
             <div className="col-span-full">
-                    <label htmlFor="text" className="block text-sm/6 font-medium text-gray-900">
-                      Text
-                    </label>
-                    <div className="mt-2">
-                      <textarea
-                        id="text"
-                        name="text"
-                        rows={3}
-                        className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
-                        value={text}
-                        onChange={handleTextChange}
-                      />
-                    </div>
-                    <p className="mt-3 text-sm/6 text-gray-600">Say something nice to your users.</p>
-                  </div>
+              <label htmlFor="text" className="block text-sm/6 font-medium text-gray-900">
+                Text
+              </label>
+              <div className="mt-2">
+                <textarea
+                  id="text"
+                  name="text"
+                  rows={3}
+                  className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
+                  value={text}
+                  onChange={handleTextChange}
+                />
+              </div>
+              <p className="mt-3 text-sm/6 text-gray-600">Say something nice to your users.</p>
+            </div>
             {isLoading && <LoadingSpinner />}
             <div>
               <button
