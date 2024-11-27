@@ -21,7 +21,6 @@ export default function SecurityAnswer() {
             "https://school-project-backend-p17b.onrender.com/api/v1/commerce/admin/auth/verify-security-answer";
         const data = { securityAnswer, adminId };
         try {
-            localStorage.removeItem('jwt');
             const response = await axios.post(apiUrl, data, {
                 headers: { 'Authorization': `Bearer ${jwt}` },
             });
