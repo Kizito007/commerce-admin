@@ -16,6 +16,7 @@ export default function CreateAdmin() {
     email: "",
     password: "",
     securityAnswer: "",
+    securityQuestion: "",
     role: "EDITOR", // Default value
     file: null,
   });
@@ -66,7 +67,7 @@ export default function CreateAdmin() {
 
   return (
     <>
-      <Navbar/>
+      <Navbar />
       {error && (
         <FlashBanner
           message={error}
@@ -151,6 +152,30 @@ export default function CreateAdmin() {
                 />
               </div>
             </div>
+            <div className="border-b border-gray-900/10 pb-12">
+              <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                <div className="sm:col-span-3">
+                  <label htmlFor="role" className="block text-sm font-medium text-gray-900">
+                    Security Question
+                  </label>
+                  <div className="mt-2">
+                    <select
+                      id="securityQuestion"
+                      name="securityQuestion"
+                      value={formData.securityQuestion}
+                      onChange={handleChange}
+                      className="block w-full rounded-md border-0 py-2 px-3 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-gray-600 text-sm"
+                    >
+                      <option>What was the name of your first pet</option>
+                      <option>What is the name of the street you grew up on</option>
+                      <option>What was the name of your first car</option>
+                      <option>What is your mother’s maiden name</option>
+                      <option>What is the name of your favorite childhood teacher</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+            </div>
 
             <div>
               <label
@@ -207,11 +232,11 @@ export default function CreateAdmin() {
                       className="relative cursor-pointer rounded-md bg-white font-semibold text-gray-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-gray-600 focus-within:ring-offset-2 hover:text-gray-500"
                     >
                       <span>Upload a file</span>
-                      <input id="file" name="file" type="file" onChange={handleChange} className="sr-only" accept=".png, .jpg" />
+                      <input id="file" name="file" type="file" onChange={handleChange} className="sr-only" accept=".png, .jpg, .jpeg" />
                     </label>
                     <p className="pl-1">or drag and drop</p>
                   </div>
-                  <p className="text-xs/5 text-gray-600">PNG, JPG up to 10MB</p>
+                  <p className="text-xs/5 text-gray-600">PNG, JPG, .JPEG up to 10MB</p>
                   {formData.file && (
                     <div className="mt-4 text-center">
                       <p className="text-sm text-gray-700">Selected file: {formData.file.name}</p>
