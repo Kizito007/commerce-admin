@@ -39,6 +39,7 @@ export default function Navbar() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('adminId');
     localStorage.removeItem('faceMatch');
+    localStorage.removeItem('isAnswered');
     router.push('/admin/login');
   };
   

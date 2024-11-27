@@ -4,11 +4,12 @@ import axios from "axios";
 import Layout from "../components/layout/Layout";
 import Navbar from "../components/layout/Navbar";
 import ProductList from "../components/common/ProductList";
-import { useAuth } from "../components/hooks/useAuth";
+import { useAuth, useSecurityQuestionAuth } from "../components/hooks/useAuth";
 import FlashBanner from "../components/common/FlashBanner";
 
 export default function Page() {
   useAuth();
+  useSecurityQuestionAuth();
   const [products, setProducts] = useState([]);
   const [totalProductsCount, setTotalProductsCount] = useState('');
   const [isLoading, setIsLoading] = useState(true);

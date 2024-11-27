@@ -23,3 +23,14 @@ export function useFaceAuth(history) {
     }
   }, [router]);
 }
+
+export function useSecurityQuestionAuth() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const isAnswered = localStorage.getItem('isAnswered');
+    if (!isAnswered) {
+      router.push(`/admin/security-answer`);
+    }
+  }, [router]);
+}

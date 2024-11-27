@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 import FlashBanner from "@/app/components/common/FlashBanner";
 import LoadingSpinner from "@/app/components/common/LoadingSpinner";
@@ -9,14 +9,14 @@ export default function SecurityAnswer() {
     const [securityAnswer, setSecurityAnswer] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
-    const searchParams = useSearchParams();
-    const adminId = searchParams.get('adminId');
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
 
     const submit = async (e) => {
         e.preventDefault();
         setIsLoading(true);
+        const adminId = localStorage.getItem('adminId')
+        const jwt = localStorage.getItem('jwt')
         const apiUrl =
             "https://school-project-backend-p17b.onrender.com/api/v1/commerce/admin/auth/verify-security-answer";
         const data = { securityAnswer, adminId };
@@ -27,21 +27,21 @@ export default function SecurityAnswer() {
             const token = response.data.data.token;
             if (token) {
                 setSuccess("Security Answer Verified")
-                localStorage.setItem("jwt", token);
+                localStorage.setItem("isAnswered", true);
                 setIsLoading(false);
                 setTimeout(() => {
-                    localStorage.removeItem('jwt');
+                    localStorage.removeItem('isAnswered');
                     router.push('/admin/login');
                 }, 3600000); // 1 hour
-                router.push("/dashboard");
+                router.push("/products");
             } else {
                 setIsLoading(false);
-                console.error("Security Answer not found in the response");
+                console.log("Security Answer not found in the response");
                 setError("Network Error");
                 router.push("/admin/login");
             }
         } catch (error) {
-            console.error("Error during verification:", error.response?.data.message);
+            console.log("Error during verification:", error.response?.data.message);
             setError(error.response?.data.message);
             setIsLoading(false);
             setTimeout(() => {
