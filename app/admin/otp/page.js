@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from "react";
 import axios from "axios";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useState } from "react";
@@ -53,7 +54,7 @@ export default function Otp() {
   };
 
     return (
-      <>
+      <Suspense fallback={<div>Loading...</div>}>
        {error && (
         <FlashBanner
           message={error}
@@ -111,7 +112,7 @@ export default function Otp() {
             </form>
           </div>
         </div>
-      </>
+      </Suspense>
     )
   }
   

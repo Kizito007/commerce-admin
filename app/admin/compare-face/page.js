@@ -1,4 +1,5 @@
 "use client";
+import { Suspense } from "react";
 import axios from "axios";
 import { useState, useRef, useEffect } from "react";
 import Webcam from "react-webcam";
@@ -98,7 +99,7 @@ export default function CameraCaptureUpload() {
     };
 
     return (
-        <>
+        <Suspense>
             {error && (
                 <FlashBanner
                     message={error}
@@ -164,6 +165,6 @@ export default function CameraCaptureUpload() {
                     Verify Image
                 </button>
             </div>
-        </>
+        </Suspense>
     );
 }

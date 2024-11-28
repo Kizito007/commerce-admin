@@ -1,4 +1,6 @@
 "use client"
+import { useEffect, useState } from "react";
+import axios from "axios";
 import {
   Disclosure,
   DisclosureButton,
@@ -33,7 +35,30 @@ function classNames(...classes) {
 }
 
 export default function Navbar() {
+  const [admin, setAdmin] = useState({});
   const router = useRouter();
+
+  useEffect(() => {
+    const fetchAdmin = async () => {
+      try {
+        const jwt = localStorage.getItem('jwt')
+        const adminId = localStorage.getItem('adminId')
+        const response = await axios.get(
+          `https://school-project-backend-p17b.onrender.com/api/v1/commerce/admin/admin-mgmt/admins/${adminId}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${jwt}`
+            }
+          }
+        );
+        setAdmin(response.data.data);
+      } catch (err) {
+        console.log(err)
+      }
+    };
+
+    fetchAdmin();
+  }, []);
 
   const signOut = () => {
     localStorage.removeItem('jwt');
@@ -97,7 +122,7 @@ export default function Navbar() {
                         <span className="sr-only">Open user menu</span>
                         <img
                           alt=""
-                          src={user.imageUrl}
+                          src={admin?.photo?.url}
                           className="size-8 rounded-full"
                         />
                       </MenuButton>
