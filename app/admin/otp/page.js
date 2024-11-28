@@ -6,7 +6,7 @@ import { useState } from "react";
 import FlashBanner from "@/app/components/common/FlashBanner";
 import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 
-export default function Otp() {
+function OtpVerification() {
   const [otp, setOtp] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
@@ -54,7 +54,7 @@ export default function Otp() {
   };
 
     return (
-      <Suspense fallback={<div>Loading...</div>}>
+      <>
        {error && (
         <FlashBanner
           message={error}
@@ -112,7 +112,14 @@ export default function Otp() {
             </form>
           </div>
         </div>
-      </Suspense>
+      </>
     )
-  }
-  
+}
+
+export default function Otp() {
+  return (
+    <Suspense>
+      <OtpVerification />
+    </Suspense>
+  )
+}
