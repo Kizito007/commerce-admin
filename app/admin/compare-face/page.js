@@ -8,7 +8,7 @@ import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 import { convertBase64ImageToJpg } from "./convertBase64ToJpg";
 import { useRouter, useSearchParams } from "next/navigation";
 
-export default function CameraCaptureUpload() {
+function CaptureUpload() {
     const [capturedImage, setCapturedImage] = useState(null);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState(null);
@@ -99,7 +99,7 @@ export default function CameraCaptureUpload() {
     };
 
     return (
-        <Suspense>
+        <>
             {error && (
                 <FlashBanner
                     message={error}
@@ -165,6 +165,14 @@ export default function CameraCaptureUpload() {
                     Verify Image
                 </button>
             </div>
-        </Suspense>
+        </>
     );
+}
+
+export default function CameraCaptureUpload() {
+    return (
+        <Suspense>
+        <CaptureUpload />
+        </Suspense>
+    )
 }
