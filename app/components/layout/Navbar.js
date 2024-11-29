@@ -64,7 +64,10 @@ export default function Navbar() {
     localStorage.removeItem('jwt');
     localStorage.removeItem('adminId');
     localStorage.removeItem('faceMatch');
-    localStorage.removeItem('isAnswered');
+    localStorage.removeItem('isProductsAnswered');
+    localStorage.removeItem('isOrdersAnswered');
+    localStorage.removeItem('isAdminsAnswered');
+    localStorage.removeItem('isCommsAnswered');
     router.push('/admin/login');
   };
   
@@ -131,7 +134,7 @@ export default function Navbar() {
                       transition
                       className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black/5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                     >
-                      {userNavigation.map((item) => (
+                      {/* {userNavigation.map((item) => (
                         <MenuItem key={item.name}>
                           <a
                             href={item.href}
@@ -140,7 +143,7 @@ export default function Navbar() {
                             {item.name}
                           </a>
                         </MenuItem>
-                      ))}
+                      ))} */}
 
                       <a
                         onClick={signOut}
@@ -194,16 +197,16 @@ export default function Navbar() {
                 <div className="shrink-0">
                   <img
                     alt=""
-                    src={user.imageUrl}
+                    src={admin?.photo?.url}
                     className="size-10 rounded-full"
                   />
                 </div>
                 <div className="ml-3">
                   <div className="text-base/5 font-medium text-white">
-                    {user.name}
+                    {admin?.username}
                   </div>
                   <div className="text-sm font-medium text-gray-400">
-                    {user.email}
+                    {admin.email}
                   </div>
                 </div>
                 {/* <button
@@ -215,7 +218,7 @@ export default function Navbar() {
                   <BellIcon aria-hidden="true" className="size-6" />
                 </button> */}
               </div>
-              <div className="mt-3 space-y-1 px-2">
+              {/* <div className="mt-3 space-y-1 px-2">
                 {userNavigation.map((item) => (
                   <DisclosureButton
                     key={item.name}
@@ -226,7 +229,7 @@ export default function Navbar() {
                     {item.name}
                   </DisclosureButton>
                 ))}
-              </div>
+              </div> */}
             </div>
           </DisclosurePanel>
         </Disclosure>

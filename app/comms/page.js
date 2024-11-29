@@ -3,12 +3,13 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Layout from "../components/layout/Layout";
 import Navbar from "../components/layout/Navbar";
-import { useAuth } from "../components/hooks/useAuth";
+import { useAuth, useCommsSecurityQuestionAuth } from "../components/hooks/useAuth";
 import FlashBanner from "../components/common/FlashBanner";
 import UserList from "../components/common/UserList";
 
 export default function Page() {
   useAuth();
+  useCommsSecurityQuestionAuth('comms')
   const [users, seUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);

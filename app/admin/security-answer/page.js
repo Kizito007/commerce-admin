@@ -1,16 +1,18 @@
 "use client";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
 import FlashBanner from "@/app/components/common/FlashBanner";
 import LoadingSpinner from "@/app/components/common/LoadingSpinner";
 
-export default function SecurityAnswer() {
+function Answer() {
     const [securityAnswer, setSecurityAnswer] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const router = useRouter();
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(null);
+    const searchParams = useSearchParams();
+    const history = searchParams.get('history');
 
     const submit = async (e) => {
         e.preventDefault();
@@ -27,13 +29,30 @@ export default function SecurityAnswer() {
             const token = response.data.data.token;
             if (token) {
                 setSuccess("Security Answer Verified")
-                localStorage.setItem("isAnswered", true);
                 setIsLoading(false);
                 setTimeout(() => {
-                    localStorage.removeItem('isAnswered');
+                    localStorage.removeItem('isProductsAnswered');
                     router.push('/admin/login');
                 }, 3600000); // 1 hour
-                router.push("/products");
+
+                switch (history) {
+                    case 'products':
+                        localStorage.setItem("isProductsAnswered", true);
+                        return router.push(`/${history}`)
+                    case 'orders':
+                        localStorage.setItem("isOrdersAnswered", true);
+                        return router.push(`/${history}`)
+                    case 'admins':
+                        localStorage.setItem("isAdminsAnswered", true);
+                        return router.push(`/${history}`)
+
+                    case 'comms':
+                        localStorage.setItem("isCommsAnswered", true);
+                        return router.push(`/${history}`)
+
+                    default:
+                        break;
+                }
             } else {
                 setIsLoading(false);
                 console.log("Security Answer not found in the response");
@@ -114,5 +133,13 @@ export default function SecurityAnswer() {
                 </div>
             </div>
         </>
+    )
+}
+
+export default function SecurityAnswer() {
+    return (
+        <Suspense>
+            <Answer />
+        </Suspense>
     )
 }

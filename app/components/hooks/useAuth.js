@@ -24,13 +24,46 @@ export function useFaceAuth(history) {
   }, [router]);
 }
 
-export function useSecurityQuestionAuth() {
+export function useProductsSecurityQuestionAuth(history) {
   const router = useRouter();
 
   useEffect(() => {
-    const isAnswered = localStorage.getItem('isAnswered');
+    const isAnswered = localStorage.getItem('isProductsAnswered');
     if (!isAnswered) {
-      router.push(`/admin/security-answer`);
+      router.push(`/admin/security-answer?history=${history}`);
+    }
+  }, [router]);
+}
+
+export function useOrdersSecurityQuestionAuth(history) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const isAnswered = localStorage.getItem('isOrdersAnswered');
+    if (!isAnswered) {
+      router.push(`/admin/security-answer?history=${history}`);
+    }
+  }, [router]);
+}
+
+export function useAdminsSecurityQuestionAuth(history) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const isAnswered = localStorage.getItem('isAdminsAnswered');
+    if (!isAnswered) {
+      router.push(`/admin/security-answer?history=${history}`);
+    }
+  }, [router]);
+}
+
+export function useCommsSecurityQuestionAuth(history) {
+  const router = useRouter();
+
+  useEffect(() => {
+    const isAnswered = localStorage.getItem('isCommsAnswered');
+    if (!isAnswered) {
+      router.push(`/admin/security-answer?history=${history}`);
     }
   }, [router]);
 }

@@ -3,11 +3,12 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Layout from "../components/layout/Layout";
 import Navbar from "../components/layout/Navbar";
-import { useAuth } from "../components/hooks/useAuth";
 import FlashBanner from "../components/common/FlashBanner";
 import OrderList from "../components/common/OrderList";
+import { useOrdersSecurityQuestionAuth } from "../components/hooks/useAuth";
 
 export default function Page() {
+  useOrdersSecurityQuestionAuth('orders')
   const [orders, setOrders] = useState([]);
   const [totalOrdersCount, setTotalOrdersCount] = useState('');
   const [isLoading, setIsLoading] = useState(true);

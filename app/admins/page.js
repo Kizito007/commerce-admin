@@ -4,11 +4,12 @@ import axios from "axios";
 import AdminList from "../components/common/AdminList";
 import Layout from "../components/layout/Layout";
 import Navbar from "../components/layout/Navbar";
-import { useAuth } from "../components/hooks/useAuth";
+import { useAdminsSecurityQuestionAuth, useAuth } from "../components/hooks/useAuth";
 import FlashBanner from "../components/common/FlashBanner";
 
 export default function Page() {
   useAuth();
+  useAdminsSecurityQuestionAuth('admins');
   const [admins, setAdmins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
