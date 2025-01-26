@@ -70,6 +70,13 @@ export default function Navbar() {
     localStorage.removeItem('isCommsAnswered');
     router.push('/admin/login');
   };
+  const removeMatches = () => {
+    localStorage.removeItem('faceMatch');
+    localStorage.removeItem('isProductsAnswered');
+    localStorage.removeItem('isOrdersAnswered');
+    localStorage.removeItem('isAdminsAnswered');
+    localStorage.removeItem('isCommsAnswered');
+  };
   
   return (
     <>
@@ -93,6 +100,7 @@ export default function Navbar() {
                         key={item.name}
                         href={item.href}
                         aria-current={item.current ? "page" : undefined}
+                        onClick={removeMatches}
                         className={classNames(
                           item.current
                             ? "bg-gray-900 text-white"

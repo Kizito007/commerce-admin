@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import Navbar from "../components/layout/Navbar";
 import Layout from "../components/layout/Layout";
@@ -13,6 +14,7 @@ export default function Page() {
   const [stats, setStats] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter();
 
   useEffect(() => {
     const fetchStats = async () => {
@@ -31,6 +33,7 @@ export default function Page() {
       } catch (err) {
         setError("Failed to fetch stats. Please try again later.");
         setIsLoading(false);
+        router.push("/admin/login")
       }
     };
 

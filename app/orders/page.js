@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import Layout from "../components/layout/Layout";
 import Navbar from "../components/layout/Navbar";
@@ -13,6 +14,7 @@ export default function Page() {
   const [totalOrdersCount, setTotalOrdersCount] = useState('');
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter()
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -32,6 +34,7 @@ export default function Page() {
       } catch (err) {
         setError("Failed to fetch orders. Please try again later.");
         setIsLoading(false);
+        router.push("/admin/login")
       }
     };
 

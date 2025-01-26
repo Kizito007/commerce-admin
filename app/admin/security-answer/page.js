@@ -38,17 +38,17 @@ function Answer() {
                 switch (history) {
                     case 'products':
                         localStorage.setItem("isProductsAnswered", true);
-                        return router.push(`/${history}`)
+                        return router.push(`/admin/compare-face?history=${history}`)
                     case 'orders':
                         localStorage.setItem("isOrdersAnswered", true);
-                        return router.push(`/${history}`)
+                        return router.push(`/admin/compare-face?history=${history}`)
                     case 'admins':
                         localStorage.setItem("isAdminsAnswered", true);
-                        return router.push(`/${history}`)
+                        return router.push(`/admin/compare-face?history=${history}`)
 
                     case 'comms':
                         localStorage.setItem("isCommsAnswered", true);
-                        return router.push(`/${history}`)
+                        return router.push(`/admin/compare-face?history=${history}`)
 
                     default:
                         break;
@@ -115,6 +115,7 @@ function Answer() {
                                     name="securityAnswer"
                                     type="text"
                                     required
+                                    autoComplete="off"
                                     className="block w-full rounded-md border-0 p-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-gray-600 sm:text-sm/6"
                                     onChange={handleSecurityAnswerChange}
                                 />

@@ -1,5 +1,6 @@
 "use client"
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import axios from "axios";
 import AdminList from "../components/common/AdminList";
 import Layout from "../components/layout/Layout";
@@ -13,6 +14,7 @@ export default function Page() {
   const [admins, setAdmins] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const router = useRouter()
 
   useEffect(() => {
     const fetcAdmins = async () => {
@@ -32,6 +34,7 @@ export default function Page() {
       } catch (err) {
         setError("Failed to fetch admins. Please try again later.");
         setIsLoading(false);
+        router.push("/admin/login")
       }
     };
 

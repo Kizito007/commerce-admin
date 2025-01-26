@@ -30,6 +30,10 @@ export default function Page() {
         setProducts(response.data.data.products);
         setTotalProductsCount(response.data.data.totalProductsCount)
         setIsLoading(false);
+        // const faceAuth = localStorage.getItem('faceMatch')
+        // if (!faceAuth) {
+        //   router.push(`/admin/compare-face?history=products`);
+        // }
       } catch (err) {
         setError("Failed to fetch products. Please try again later.");
         setIsLoading(false);
