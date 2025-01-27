@@ -45,9 +45,6 @@ export default function CreateAdmin() {
           }
         }
       );
-      setError(
-        error.response?.data.message || "An error occurred while creating the administrator."
-      );
       if (response.data.data.role !== 'SUPER_ADMIN') {
         setError(
           "Only Super Admins are allowed to create admin."
@@ -66,12 +63,12 @@ export default function CreateAdmin() {
     setIsLoading(true);
 
     try {
-      await fetchAdmin()
       const formDataToSubmit = new FormData();
       for (const key in formData) {
         formDataToSubmit.append(key, formData[key]);
       }
       const jwt = localStorage.getItem('jwt')
+      await fetchAdmin(jwt)
 
       const apiUrl =
         "https://school-project-backend-p17b.onrender.com/api/v1/commerce/admin/admin-mgmt/admins";
