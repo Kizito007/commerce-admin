@@ -169,7 +169,7 @@ export default function CreateAdmin() {
                       <option>What was the name of your first pet</option>
                       <option>What is the name of the street you grew up on</option>
                       <option>What was the name of your first car</option>
-                      <option>What is your mother’s maiden name</option>
+                      <option>What is your mothers maiden name</option>
                       <option>What is the name of your favorite childhood teacher</option>
                     </select>
                   </div>
