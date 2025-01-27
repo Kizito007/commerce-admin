@@ -34,11 +34,39 @@ export default function CreateAdmin() {
     }
   };
 
+  const fetchAdmin = async (jwt) => {
+    try {
+      const adminId = localStorage.getItem('adminId')
+      const response = await axios.get(
+        `https://school-project-backend-p17b.onrender.com/api/v1/commerce/admin/admin-mgmt/admins/${adminId}`,
+        {
+          headers: {
+            'Authorization': `Bearer ${jwt}`
+          }
+        }
+      );
+      setError(
+        error.response?.data.message || "An error occurred while creating the administrator."
+      );
+      if (response.data.data.role !== 'SUPER_ADMIN') {
+        setError(
+          "Only Super Admins are allowed to create admin."
+        );
+      }
+      setTimeout(() => {
+        router.push("/admins");
+      }, 2000);
+      } catch (err) {
+      console.log(err)
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
+      await fetchAdmin()
       const formDataToSubmit = new FormData();
       for (const key in formData) {
         formDataToSubmit.append(key, formData[key]);
